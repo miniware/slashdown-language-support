@@ -1,0 +1,53 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Slashdown",
+  "scopeName": "source.slashdown",
+	"patterns": "patterns": [
+    {
+      "name": "comment.line.double-slash.sd",
+      "match": "//.*",
+      "captures": {
+        "0": { "name": "punctuation.definition.comment.sd" }
+      }
+    },
+    {
+      "name": "tag.sd",
+      "match": "/[a-zA-Z0-9]*",
+      "captures": {
+        "0": { "name": "entity.name.tag.sd" }
+      }
+    },
+    {
+      "name": "attribute.sd",
+      "match": "[a-zA-Z0-9-]*=\"[^\"]*\"",
+      "captures": {
+        "0": { "name": "entity.other.attribute-name.sd" }
+      }
+    },
+    {
+      "name": "class.sd",
+      "match": "\\.\\w+",
+      "captures": {
+        "0": { "name": "entity.other.attribute-name.class.sd" }
+      }
+    },
+    {
+      "name": "id.sd",
+      "match": "#\\w+",
+      "captures": {
+        "0": { "name": "entity.other.attribute-name.id.sd" }
+      }
+    },
+    {
+      "name": "markdown.sd",
+      "begin": "(^[^/].*$)",
+      "end": "(^/.*$|^\\s*$)",
+      "contentName": "text.html.markdown",
+      "patterns": [
+        {
+          "include": "text.html.markdown"
+        }
+      ]
+    },
+  ]
+}

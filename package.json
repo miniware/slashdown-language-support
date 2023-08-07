@@ -1,0 +1,25 @@
+{
+  "name": "slashdown-language-support",
+  "displayName": "Slashdown Language Support",
+  "description": "Language support for Slashdown in vs-code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.81.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "slashdown",
+      "aliases": ["Slashdown", "slashdown"],
+      "extensions": [".sd"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "slashdown",
+      "scopeName": "source.slashdown",
+      "path": "./syntaxes/slashdown.tmLanguage.json"
+    }]
+  }
+}
