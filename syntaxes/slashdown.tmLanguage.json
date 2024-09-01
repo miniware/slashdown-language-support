@@ -1,53 +1,106 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Slashdown",
-  "scopeName": "source.slashdown",
-	"patterns": "patterns": [
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "SlashDown",
+  "patterns": [
     {
-      "name": "comment.line.double-slash.sd",
-      "match": "//.*",
-      "captures": {
-        "0": { "name": "punctuation.definition.comment.sd" }
-      }
+      "include": "#comments"
     },
     {
-      "name": "tag.sd",
-      "match": "/[a-zA-Z0-9]*",
-      "captures": {
-        "0": { "name": "entity.name.tag.sd" }
-      }
+      "include": "#tags"
     },
     {
-      "name": "attribute.sd",
-      "match": "[a-zA-Z0-9-]*=\"[^\"]*\"",
-      "captures": {
-        "0": { "name": "entity.other.attribute-name.sd" }
-      }
+      "include": "#attributes"
     },
     {
-      "name": "class.sd",
-      "match": "\\.\\w+",
-      "captures": {
-        "0": { "name": "entity.other.attribute-name.class.sd" }
-      }
+      "include": "#markdown"
     },
     {
-      "name": "id.sd",
-      "match": "#\\w+",
-      "captures": {
-        "0": { "name": "entity.other.attribute-name.id.sd" }
-      }
-    },
-    {
-      "name": "markdown.sd",
-      "begin": "(^[^/].*$)",
-      "end": "(^/.*$|^\\s*$)",
-      "contentName": "text.html.markdown",
+      "include": "#codeFence"
+    }
+  ],
+  "repository": {
+    "comments": {
       "patterns": [
         {
-          "include": "text.html.markdown"
+          "name": "comment.line.double-slash.slashdown",
+          "match": "^\\s*(//.*)"
         }
       ]
     },
-  ]
+    "tags": {
+      "patterns": [
+        {
+          "name": "entity.name.tag.slashdown",
+          "match": "^\\s*(/[a-zA-Z0-9-]*)",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.slashdown"
+            }
+          }
+        }
+      ]
+    },
+    "attributes": {
+      "patterns": [
+        {
+          "name": "entity.other.attribute-name.class.slashdown",
+          "match": "\\.[a-zA-Z0-9-]+"
+        },
+        {
+          "name": "entity.other.attribute-name.id.slashdown",
+          "match": "#[a-zA-Z0-9-]+"
+        },
+        {
+          "match": "(\\w+)\\s*(=)\\s*(['\"].*?['\"])",
+          "captures": {
+            "1": {
+              "name": "entity.other.attribute-name.slashdown"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.slashdown"
+            },
+            "3": {
+              "name": "string.quoted.double.slashdown"
+            }
+          }
+        }
+      ]
+    },
+    "markdown": {
+      "patterns": [
+        {
+          "name": "markup.heading.slashdown",
+          "match": "^\\s*(#{1,6}\\s+.+)$"
+        },
+        {
+          "name": "markup.italic.slashdown",
+          "match": "\\*[^*]+\\*"
+        },
+        {
+          "name": "markup.bold.slashdown",
+          "match": "\\*\\*[^*]+\\*\\*"
+        },
+        {
+          "name": "markup.inline.raw.slashdown",
+          "match": "`[^`]+`"
+        }
+      ]
+    },
+    "codeFence": {
+      "name": "markup.fenced_code.block.slashdown",
+      "begin": "^\\s*```\\s*([a-zA-Z0-9-]+)?$",
+      "end": "^\\s*```\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.fenced_code.block.language.slashdown"
+        }
+      },
+      "patterns": [
+        {
+          "include": "source.slashdown"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.slashdown"
 }
