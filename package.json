@@ -3,6 +3,7 @@
   "displayName": "Slashdown Language Support",
   "description": "Language support for Slashdown in vs-code",
   "version": "0.0.1",
+  "repository": "https://github.com/miniware/slashdown-language-support",
   "engines": {
     "vscode": "^1.81.0"
   },
