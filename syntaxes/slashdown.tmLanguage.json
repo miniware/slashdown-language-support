@@ -19,33 +19,32 @@
     "tags": {
       "patterns": [
         {
-          "match": "^(\\s*)(/[a-zA-Z0-9-]*)(?:([.#][a-zA-Z0-9-]+)*)*((?:\\s+(?:[a-zA-Z0-9-]+(?:=(?:['\"][^'\"]*['\"]|\\S+))?|[.#][a-zA-Z0-9-]+))*)\\s*$",
+          "match": "^(\\s*)(/[a-zA-Z0-9-_]+)((?:\\s*[.#][a-zA-Z0-9-_]+)*)((?:\\s+(?:[a-zA-Z0-9-_]+(?:=(?:['\"][^'\"]*['\"]|[^\\s'\"]+))?|[.#][a-zA-Z0-9-_]+))*)\\s*(=)?\\s*(.*)$",
           "captures": {
             "2": { "name": "entity.name.tag.slashdown" },
             "3": {
               "patterns": [
-                { "match": "([.#])([a-zA-Z0-9-]+)", "captures": {
-                  "1": { "name": "punctuation.separator.slashdown" },
-                  "2": { "name": "entity.other.attribute-name.class.slashdown" }
-                }}
+                { "match": "([.#][a-zA-Z0-9-_]+)", "name": "entity.other.attribute-name.class-or-id.slashdown" }
               ]
             },
             "4": {
               "patterns": [
                 {
-                  "match": "\\s+([a-zA-Z0-9-]+)(?:=(['\"][^'\"]*['\"]|\\S+))?",
+                  "match": "\\s+([a-zA-Z0-9-_]+)(?:=(['\"][^'\"]*['\"]|[^\\s'\"]+))?",
                   "captures": {
                     "1": { "name": "entity.other.attribute-name.slashdown" },
                     "2": { "name": "string.quoted.double.slashdown" }
                   }
                 },
-                { "match": "\\s+([.#][a-zA-Z0-9-]+)", "name": "entity.other.attribute-name.slashdown" }
+                { "match": "\\s+([.#][a-zA-Z0-9-_]+)", "name": "entity.other.attribute-name.class-or-id.slashdown" }
               ]
-            }
+            },
+            "5": { "name": "keyword.operator.assignment.slashdown" },
+            "6": { "name": "string.unquoted.slashdown" }
           }
         },
         {
-          "match": "^(\\s+)([a-zA-Z0-9-]+)(?:=(['\"][^'\"]*['\"]|\\S+))?\\s*$",
+          "match": "^(\\s+)([a-zA-Z0-9-_]+)(?:=(['\"][^'\"]*['\"]|[^\\s'\"]+))?\\s*$",
           "captures": {
             "2": { "name": "entity.other.attribute-name.slashdown" },
             "3": { "name": "string.quoted.double.slashdown" }
@@ -61,35 +60,43 @@
         },
         {
           "name": "markup.italic.slashdown",
-          "match": "\\*[^*]+\\*"
+          "match": "(?<![\\w*])\\*(?!\\s)(.+?)(?<!\\s)\\*(?!\\w)"
         },
         {
           "name": "markup.bold.slashdown",
-          "match": "\\*\\*[^*]+\\*\\*"
+          "match": "(?<![\\w*])\\*\\*(?!\\s)(.+?)(?<!\\s)\\*\\*(?!\\w)"
         },
         {
           "name": "markup.inline.raw.slashdown",
-          "match": "`[^`]+`"
+          "match": "(?<!`)(`+)(?!`)(.+?)(?<!`)(\\1)(?!`)"
+        },
+        {
+          "name": "markup.underline.link.slashdown",
+          "match": "\\[([^\\]]+)\\]\\(([^\\)]+)\\)"
+        },
+        {
+          "name": "markup.list.unnumbered.slashdown",
+          "match": "^\\s*([*+-])\\s+(.+)$"
+        },
+        {
+          "name": "markup.list.numbered.slashdown",
+          "match": "^\\s*(\\d+\\.)\\s+(.+)$"
+        },
+        {
+          "name": "markup.quote.slashdown",
+          "match": "^\\s*(>\\s+.+)$"
         }
       ]
     },
     "codeFence": {
       "name": "markup.fenced_code.block.slashdown",
-      "begin": "^\\s*```\\s*([a-zA-Z0-9-]+)?$",
-      "end": "^\\s*```\\s*$",
+      "begin": "^\\s*(`{3,})\\s*(?i:(\\w+))?$",
+      "end": "^\\s*\\1\\s*$",
       "beginCaptures": {
-        "1": { "name": "entity.name.type.fenced_code.block.language.slashdown" }
+        "2": { "name": "entity.name.type.fenced_code.block.language.slashdown" }
       },
       "patterns": [
-        {
-          "begin": "(?<=```)(([a-zA-Z0-9-]+))",
-          "while": "(^|\\G)(?!\\s*```\\s*$)",
-          "patterns": [
-            {
-              "include": "source.${2}"
-            }
-          ]
-        }
+        { "include": "source.${2:slashdown}" }
       ]
     }
   },
