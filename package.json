@@ -1,27 +1,48 @@
 {
-  "name": "slashdown-language-support",
-  "displayName": "Slashdown Language Support",
-  "description": "Language support for Slashdown in vs-code",
-  "version": "0.0.1",
-  "publisher": "Miniware",
-  "repository": "https://github.com/miniware/slashdown-language-support",
+  "name": "slashdown",
+  "displayName": "Slashdown",
+  "description": "Syntax highlighting for Slashdown - Markdown with HTML-like tags",
+  "version": "0.1.0",
+  "publisher": "slashdown",
+  "license": "MIT",
   "engines": {
-    "vscode": "^1.81.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "keywords": [
+    "slashdown",
+    "markdown",
+    "markup",
+    "syntax highlighting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickisnoble/slashdown"
+  },
   "contributes": {
-    "languages": [{
-      "id": "slashdown",
-      "aliases": ["Slashdown", "slashdown"],
-      "extensions": [".sd"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "slashdown",
-      "scopeName": "source.slashdown",
-      "path": "./syntaxes/slashdown.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "slashdown",
+        "aliases": [
+          "Slashdown",
+          "slashdown",
+          "sd"
+        ],
+        "extensions": [
+          ".sd",
+          ".slashdown"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "slashdown",
+        "scopeName": "text.slashdown",
+        "path": "./syntaxes/slashdown.tmLanguage.json"
+      }
+    ]
   }
 }
